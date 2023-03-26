@@ -1,0 +1,28 @@
+app:
+  jwt:
+    token:
+      key: 4125442A462D4A614E645267556B58703273357638792F423F4528482B4B6250
+      expiration: 86400000
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spiderhub-demo
+    username: postgres
+    password: 2002
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: lochinbek433@gmail.com
+    password: ixzsnjwpyffafpdv
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true

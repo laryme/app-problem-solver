@@ -2,6 +2,7 @@ package uz.pdp.appproblemsolver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import uz.pdp.appproblemsolver.entity.enums.Permission;
 
 @SpringBootApplication
 public class AppProblemSolverApplication {
