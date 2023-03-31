@@ -39,13 +39,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
 
         jwt = header.substring(Constants.AUTH_TYPE_BEARER.length());
-        username = jwtService.extractUsername(jwt);
+        username = jwtService.extractUsernameFromAccessToken(jwt);
 
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
             //todo handle user not found exception
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 
-            if(jwtService.isTokenValid(jwt, userDetails)){
+            if(jwtService.isAccessTokenValid(jwt, userDetails)){
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,

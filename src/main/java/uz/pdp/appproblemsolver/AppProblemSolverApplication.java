@@ -9,6 +9,7 @@ public class AppProblemSolverApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(AppProblemSolverApplication.class, args);
+        //todo idea : make a feature like stackoverflow
     }
 
 }

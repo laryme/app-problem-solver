@@ -1,4 +1,4 @@
-package uz.pdp.appproblemsolver.dto;
+package uz.pdp.appproblemsolver.payload;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -12,7 +12,7 @@ public record RegisterDTO(
         @Pattern(regexp = "^((?!\\.)[\\w-_.]*[^.])(@\\w+)(\\.\\w+(\\.\\w+)?[^.\\W])$", message = "Please enter valid email")
         String email,
         @NotBlank(message = "Password is required")
-        @Size(min = 6, message = "Username size must be greater than 6")
+        @Size(min = 6, message = "Password size must be greater than 6")
         String password
 ) {
 }

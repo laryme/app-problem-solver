@@ -4,8 +4,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import uz.pdp.appproblemsolver.dto.ProblemDTO;
-import uz.pdp.appproblemsolver.dto.ResultMessage;
+import uz.pdp.appproblemsolver.payload.ProblemDTO;
+import uz.pdp.appproblemsolver.payload.ResultMessage;
 import uz.pdp.appproblemsolver.utils.Constants;
 
 import java.util.UUID;

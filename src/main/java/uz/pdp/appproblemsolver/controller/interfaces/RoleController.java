@@ -3,7 +3,7 @@ package uz.pdp.appproblemsolver.controller.interfaces;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import uz.pdp.appproblemsolver.dto.RoleDTO;
+import uz.pdp.appproblemsolver.payload.RoleDTO;
 import uz.pdp.appproblemsolver.entity.Role;
 import uz.pdp.appproblemsolver.utils.Constants;
 

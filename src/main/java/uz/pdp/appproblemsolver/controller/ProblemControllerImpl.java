@@ -9,8 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.appproblemsolver.controller.interfaces.ProblemController;
-import uz.pdp.appproblemsolver.dto.ProblemDTO;
-import uz.pdp.appproblemsolver.dto.ResultMessage;
+import uz.pdp.appproblemsolver.payload.ProblemDTO;
+import uz.pdp.appproblemsolver.payload.ResultMessage;
 import uz.pdp.appproblemsolver.entity.Problem;
 import uz.pdp.appproblemsolver.service.interfaces.ProblemService;
 

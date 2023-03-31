@@ -1,11 +1,10 @@
 package uz.pdp.appproblemsolver.service.interfaces;
 
-import uz.pdp.appproblemsolver.dto.AuthDTO;
-import uz.pdp.appproblemsolver.dto.RegisterDTO;
-import uz.pdp.appproblemsolver.dto.ResultMessage;
+import uz.pdp.appproblemsolver.payload.*;
 
 public interface AuthService {
 
-    ResultMessage register(RegisterDTO registerDTO);
-    ResultMessage authenticate(AuthDTO authDTO);
+    ApiResult<?> register(RegisterDTO registerDTO);
+    ApiResult<?> authenticate(AuthDTO authDTO);
+    ApiResult<?> verification(String email, String token);
 }

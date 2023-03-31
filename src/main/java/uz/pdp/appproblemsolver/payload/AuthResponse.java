@@ -1,4 +1,4 @@
-package uz.pdp.appproblemsolver.dto;
+package uz.pdp.appproblemsolver.payload;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

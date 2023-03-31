@@ -1,19 +1,19 @@
 package uz.pdp.appproblemsolver.controller.interfaces;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import uz.pdp.appproblemsolver.dto.AuthDTO;
-import uz.pdp.appproblemsolver.dto.RegisterDTO;
+import org.springframework.web.bind.annotation.*;
+import uz.pdp.appproblemsolver.payload.ApiResult;
+import uz.pdp.appproblemsolver.payload.AuthDTO;
+import uz.pdp.appproblemsolver.payload.RegisterDTO;
 import uz.pdp.appproblemsolver.utils.Constants;
 
 @RequestMapping(AuthController.BASE_PATH)
 public interface AuthController {
     String BASE_PATH = Constants.BASE_PATH+"/auth";
     @PostMapping("/register")
-    ResponseEntity<?> register(@RequestBody RegisterDTO authDTO, BindingResult result);
+    ApiResult<?> register(@RequestBody RegisterDTO authDTO);
     @PostMapping("/authenticate")
-    ResponseEntity<?> authenticate(@RequestBody AuthDTO authDTO, BindingResult result);
+    ApiResult<?> authenticate(@RequestBody AuthDTO authDTO);
+
+    @GetMapping("/verify")
+    ApiResult<?> verification(@RequestParam(name = "s") String email, @RequestParam String token);
 }

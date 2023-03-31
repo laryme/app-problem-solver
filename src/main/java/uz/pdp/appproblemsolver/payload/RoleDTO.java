@@ -1,4 +1,4 @@
-package uz.pdp.appproblemsolver.dto;
+package uz.pdp.appproblemsolver.payload;
 
 import uz.pdp.appproblemsolver.entity.enums.Permission;
 

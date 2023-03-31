@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.appproblemsolver.controller.interfaces.RoleController;
-import uz.pdp.appproblemsolver.dto.RoleDTO;
+import uz.pdp.appproblemsolver.payload.RoleDTO;
 import uz.pdp.appproblemsolver.entity.Role;
-import uz.pdp.appproblemsolver.service.RoleService;
+import uz.pdp.appproblemsolver.service.interfaces.RoleService;
 
 import java.util.List;
 

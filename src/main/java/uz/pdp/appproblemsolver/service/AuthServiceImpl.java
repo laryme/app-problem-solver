@@ -1,22 +1,28 @@
 package uz.pdp.appproblemsolver.service;
 
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import uz.pdp.appproblemsolver.dto.AuthDTO;
-import uz.pdp.appproblemsolver.dto.RegisterDTO;
-import uz.pdp.appproblemsolver.dto.ResultMessage;
 import uz.pdp.appproblemsolver.entity.User;
 import uz.pdp.appproblemsolver.entity.enums.RoleType;
+import uz.pdp.appproblemsolver.exception.TokenExpiredOrInvalid;
+import uz.pdp.appproblemsolver.exception.UsernameOrEmailAlreadyExists;
+import uz.pdp.appproblemsolver.payload.ApiResult;
+import uz.pdp.appproblemsolver.payload.AuthDTO;
+import uz.pdp.appproblemsolver.payload.RegisterDTO;
+import uz.pdp.appproblemsolver.payload.TokenDTO;
 import uz.pdp.appproblemsolver.repository.RoleRepository;
 import uz.pdp.appproblemsolver.repository.UserRepository;
 import uz.pdp.appproblemsolver.security.JwtService;
 import uz.pdp.appproblemsolver.service.interfaces.AuthService;
+import uz.pdp.appproblemsolver.utils.Constants;
 
-import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @RequiredArgsConstructor
@@ -26,13 +32,14 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final EmailSenderService emailSenderService;
 
     @Override
-    public ResultMessage register(RegisterDTO registerDTO) {
-        if(userRepository.existsByUsername(registerDTO.username()))
-            return new ResultMessage(false, "Username is already registered");
+    public ApiResult<?> register(RegisterDTO registerDTO) {
+        if (userRepository.existsByUsername(registerDTO.username()))
+            throw new UsernameOrEmailAlreadyExists("Username is already registered");
         else if (userRepository.existsByEmail(registerDTO.email()))
-            return new ResultMessage(false, "Email is already registered");
+            throw new UsernameOrEmailAlreadyExists("Email is already registered");
 
         User regUser = new User(
                 registerDTO.username(),
@@ -43,20 +50,72 @@ public class AuthServiceImpl implements AuthService {
 
         userRepository.save(regUser);
         //todo send email activation link to user
-        return new ResultMessage(true, jwtService.generateToken(regUser));
+        CompletableFuture.runAsync(() -> {
+            try {
+                emailSenderService.sendEmail(regUser.getEmail(),
+                        jwtService.generateVerificationToken(regUser));
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        return ApiResult
+                .successResponse(
+                        TokenDTO.builder()
+                                .accessToken(jwtService.generateAccessToken(regUser))
+                                .refreshToken(jwtService.generateRefreshToken(regUser))
+                                .build()
+                );
     }
+
     @Override
-    public ResultMessage authenticate(AuthDTO authDTO) {
+    public ApiResult<?> authenticate(AuthDTO authDTO) {
+
         Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         authDTO.username(),
-                        authDTO.password()
-                )
-        );
+                        authDTO.password()));
 
-        return new ResultMessage(
-                true,
-                jwtService.generateToken((User) authenticate.getPrincipal())
-        );
+
+        User principalUser = (User) authenticate.getPrincipal();
+        if(!principalUser.isEnabled()){
+            CompletableFuture.runAsync(() -> {
+                try {
+                    emailSenderService.sendEmail(principalUser.getEmail(),
+                            jwtService.generateVerificationToken(principalUser));
+
+                    return ApiResult
+                            .failResponse("Your email address has not been verified. In order to access our system," +
+                                    " you need to verify your email address first. We have sent a verification link to the email address you provided during registration." +
+                                    " Please check your email and follow the instructions in the email to verify your account. If you do not see the email in your inbox, please check your spam or junk folder.", HttpStatus.CONFLICT.value())
+                } catch (MessagingException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
+
+        return ApiResult
+                .successResponse(
+                        new TokenDTO(
+                                jwtService.generateAccessToken(principalUser),
+                                jwtService.generateRefreshToken(principalUser),
+                                Constants.AUTH_TYPE_BEARER));
+    }
+
+    @Override
+    public ApiResult<?> verification(String email, String token) {
+        try {
+            if (jwtService.isVerificationTokenValid(email, token)) {
+                User user = userRepository.findByEmail(email).orElseThrow(
+                        () -> new TokenExpiredOrInvalid("expired token"));
+
+                user.setActive(true);
+                userRepository.save(user);
+            }
+        }catch (Exception e){
+            throw new TokenExpiredOrInvalid("expired token");
+        }
+        return ApiResult
+                .successResponse("Email successfully verified");
     }
 }
