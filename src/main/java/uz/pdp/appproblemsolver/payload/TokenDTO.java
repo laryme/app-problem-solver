@@ -9,6 +9,5 @@ public record TokenDTO(
         String refreshToken,
         String tokenType
 
-
 ) {
 }

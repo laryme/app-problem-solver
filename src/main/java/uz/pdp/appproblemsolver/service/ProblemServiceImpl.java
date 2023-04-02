@@ -49,7 +49,7 @@ public class ProblemServiceImpl implements ProblemService {
         Problem problem = Problem.builder()
                 .title(problemDTO.title())
                 .description(problemDTO.description())
-                .problemLevel(ProblemLevel.values()[problemDTO.problemLevelOrdinal()])
+                .problemLevel(ProblemLevel.values()[problemDTO.problemLevel()])
                 .category(category)
                 .build();
 
@@ -75,7 +75,7 @@ public class ProblemServiceImpl implements ProblemService {
 
         problem.setTitle(problem.getTitle());
         problem.setDescription(problem.getDescription());
-        problem.setProblemLevel(ProblemLevel.values()[problemDTO.problemLevelOrdinal()]);
+        problem.setProblemLevel(ProblemLevel.values()[problemDTO.problemLevel()]);
         problem.setCategory(category);
 
         problemRepository.save(problem);

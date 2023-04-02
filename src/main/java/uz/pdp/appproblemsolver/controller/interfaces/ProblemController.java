@@ -33,6 +33,7 @@ public interface ProblemController {
             @RequestParam(required = false, defaultValue = "id,asc") String[] sort);
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('PROBLEM_EDIT')")
     ApiResult<?> editProblem(@PathVariable UUID id, @RequestBody ProblemDTO problemDTO);
 
     @DeleteMapping("/{id}")

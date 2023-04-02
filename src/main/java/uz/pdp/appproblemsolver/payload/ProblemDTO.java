@@ -9,8 +9,8 @@ public record ProblemDTO(
         String title,
         @NotBlank(message = "Description is required")
         String description,
-        @Size(min = 0, max = 2, message = "Please enter valid id")
-        Integer problemLevelOrdinal,
+        @Min(0L)@Max(2L)
+        Integer problemLevel,
         @NotNull(message = "Category is required")
         @Positive(message = "Please provide valid value")
         Integer categoryId
