@@ -2,7 +2,6 @@ package uz.pdp.appproblemsolver.service;
 
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -10,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uz.pdp.appproblemsolver.entity.User;
 import uz.pdp.appproblemsolver.entity.enums.RoleType;
+import uz.pdp.appproblemsolver.exception.EmailNotVerifiedException;
+import uz.pdp.appproblemsolver.exception.EmailSendingException;
 import uz.pdp.appproblemsolver.exception.TokenExpiredOrInvalid;
 import uz.pdp.appproblemsolver.exception.UsernameOrEmailAlreadyExists;
 import uz.pdp.appproblemsolver.payload.ApiResult;
@@ -55,7 +56,7 @@ public class AuthServiceImpl implements AuthService {
                 emailSenderService.sendEmail(regUser.getEmail(),
                         jwtService.generateVerificationToken(regUser));
             } catch (MessagingException e) {
-                throw new RuntimeException(e);
+                throw new EmailSendingException("Some error happened. Please try again later");
             }
         });
 
@@ -84,12 +85,9 @@ public class AuthServiceImpl implements AuthService {
                     emailSenderService.sendEmail(principalUser.getEmail(),
                             jwtService.generateVerificationToken(principalUser));
 
-                    return ApiResult
-                            .failResponse("Your email address has not been verified. In order to access our system," +
-                                    " you need to verify your email address first. We have sent a verification link to the email address you provided during registration." +
-                                    " Please check your email and follow the instructions in the email to verify your account. If you do not see the email in your inbox, please check your spam or junk folder.", HttpStatus.CONFLICT.value())
+                    throw new EmailNotVerifiedException();
                 } catch (MessagingException e) {
-                    throw new RuntimeException(e);
+                    throw new EmailSendingException("Some error happened. Please try again later");
                 }
             });
         }

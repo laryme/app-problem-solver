@@ -1,20 +1,29 @@
 package uz.pdp.appproblemsolver.service.interfaces;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import uz.pdp.appproblemsolver.payload.ApiResult;
 import uz.pdp.appproblemsolver.payload.ProblemDTO;
-import uz.pdp.appproblemsolver.payload.ResultMessage;
 import uz.pdp.appproblemsolver.entity.Problem;
 
-import java.util.Optional;
+import java.util.Map;
 import java.util.UUID;
 
 @Repository
 public interface ProblemService {
-    Page<Problem> getAllProblems(Pageable pageable);
+    ApiResult<Page<Problem>> getAllProblems(Pageable pageable);
 
-    Optional<Problem> getProblemById(UUID id);
+    ApiResult<Problem> getProblemById(UUID id);
 
-    ResultMessage createNewProblem(ProblemDTO problemDTO);
+    ApiResult<?> createNewProblem(ProblemDTO problemDTO);
+
+    ApiResult<Page<Problem>> getAllProblemsForAdmin(Pageable pageable);
+
+    ApiResult<?> editProblem(UUID id, ProblemDTO problemDTO);
+
+    ApiResult<?> deleteProblem(UUID id);
+
+    ApiResult<Map<Integer, String>> getAllProblemLevel();
 }

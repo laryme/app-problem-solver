@@ -6,7 +6,8 @@ public enum Permission implements GrantedAuthority {
     CATEGORY_LIST,
     CATEGORY_ONE,
     CATEGORY_CREATE,
-    PROBLEM_CREATE;
+    PROBLEM_CREATE,
+    ADMIN_PROBLEM_LIST;
 
     @Override
     public String getAuthority() {

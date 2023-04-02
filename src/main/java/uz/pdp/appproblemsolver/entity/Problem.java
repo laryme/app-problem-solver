@@ -1,7 +1,6 @@
 package uz.pdp.appproblemsolver.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import uz.pdp.appproblemsolver.entity.enums.ProblemLevel;
 
@@ -27,4 +26,5 @@ public class Problem {
     private ProblemLevel problemLevel;
     @ManyToOne
     private Category category;
+    boolean isDeleted;
 }

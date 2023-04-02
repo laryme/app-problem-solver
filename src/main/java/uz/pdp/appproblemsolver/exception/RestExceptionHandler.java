@@ -43,8 +43,7 @@ public class RestExceptionHandler {
                         .failResponse(
                                 "Username or password incorrect",
                                 HttpStatus.UNAUTHORIZED.value()),
-                HttpStatus.UNAUTHORIZED
-        );
+                HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(LockedException.class)
@@ -54,8 +53,7 @@ public class RestExceptionHandler {
                         .failResponse(
                                 "Account is blocked due to some causes",
                                 HttpStatus.UNAUTHORIZED.value()),
-                HttpStatus.UNAUTHORIZED
-        );
+                HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(DisabledException.class)
@@ -65,8 +63,7 @@ public class RestExceptionHandler {
                         .failResponse(
                                 "Account has not been activated yet. Please activate your account",
                                 HttpStatus.UNAUTHORIZED.value()),
-                HttpStatus.UNAUTHORIZED
-        );
+                HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(TokenExpiredOrInvalid.class)
@@ -76,8 +73,40 @@ public class RestExceptionHandler {
                         .failResponse(
                                 "The link you have clicked on is no longer valid. Please request a new link from the sender.",
                                 HttpStatus.BAD_REQUEST.value()),
-                HttpStatus.BAD_REQUEST
-        );
+                HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EmailNotVerifiedException.class)
+    public ResponseEntity<ApiResult<?>> exceptionHandler(EmailNotVerifiedException ex) {
+        return new ResponseEntity<>(
+                ApiResult
+                        .failResponse(
+                                "Your email address has not been verified. In order to access our system, you need to verify your email address first. We have sent a verification link to the email address you provided during registration. Please check your email and follow the instructions in the email to verify your account. If you do not see the email in your inbox, please check your spam or junk folder.",
+                                HttpStatus.CONFLICT.value()),
+                HttpStatus.CONFLICT);
+
+    }
+
+    @ExceptionHandler(EmailSendingException.class)
+    public ResponseEntity<ApiResult<?>> exceptionHandler(EmailSendingException ex) {
+        return new ResponseEntity<>(
+                ApiResult
+                        .failResponse(
+                                ex.getMessage(),
+                                HttpStatus.CONFLICT.value()),
+                HttpStatus.CONFLICT);
+
+    }
+
+    @ExceptionHandler(DataNotFoundException.class)
+    public ResponseEntity<ApiResult<?>> exceptionHandler(DataNotFoundException ex) {
+        return new ResponseEntity<>(
+                ApiResult
+                        .failResponse(
+                                ex.getMessage(),
+                                HttpStatus.NOT_FOUND.value()),
+                HttpStatus.NOT_FOUND);
+
     }
 
 }
