@@ -37,6 +37,7 @@ public interface ProblemController {
     ApiResult<?> editProblem(@PathVariable UUID id, @RequestBody ProblemDTO problemDTO);
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('PROBLEM_DELETE')")
     ApiResult<?> deleteProblem(@PathVariable UUID id);
 
     @GetMapping("/problem-level")

@@ -1,9 +1,7 @@
 package uz.pdp.appproblemsolver.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import uz.pdp.appproblemsolver.entity.enums.Permission;
 import uz.pdp.appproblemsolver.entity.enums.RoleType;
 
@@ -13,6 +11,8 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

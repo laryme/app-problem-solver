@@ -1,8 +1,8 @@
 package uz.pdp.appproblemsolver.controller.interfaces;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import uz.pdp.appproblemsolver.payload.ApiResult;
 import uz.pdp.appproblemsolver.payload.RoleDTO;
 import uz.pdp.appproblemsolver.entity.Role;
 import uz.pdp.appproblemsolver.utils.Constants;
@@ -15,18 +15,22 @@ public interface RoleController {
 
     @GetMapping("/all")
     @PreAuthorize("hasAuthority('ROLE_LIST')")
-    ResponseEntity<List<Role>> getAllRole();
+    ApiResult<List<Role>> getAllRole();
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_ONE')")
-    ResponseEntity<Role> getRoleById(@PathVariable Integer id);
+    ApiResult<Role> getRoleById(@PathVariable Integer id);
 
     @PostMapping
-    @PreAuthorize("hasAuthority('CREATE_ROLE')")
-    ResponseEntity<?> createNewRole(@RequestBody RoleDTO roleDTO);
+    @PreAuthorize("hasAuthority('ROLE_CREATE')")
+    ApiResult<?> createNewRole(@RequestBody RoleDTO roleDTO);
+
+    @PostMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_EDIT')")
+    ApiResult<?> updateRole(@PathVariable Integer id, @RequestBody RoleDTO roleDTO);
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('DELETE_ROLE')")
-    ResponseEntity<?> deleteRoleById(@PathVariable Integer id);
+    @PreAuthorize("hasAuthority('ROLE_DELETE')")
+    ApiResult<?> deleteRoleById(@PathVariable Integer id);
 
 }

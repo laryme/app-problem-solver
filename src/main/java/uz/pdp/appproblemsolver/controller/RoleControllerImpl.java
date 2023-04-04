@@ -1,9 +1,9 @@
 package uz.pdp.appproblemsolver.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import uz.pdp.appproblemsolver.controller.interfaces.RoleController;
+import uz.pdp.appproblemsolver.payload.ApiResult;
 import uz.pdp.appproblemsolver.payload.RoleDTO;
 import uz.pdp.appproblemsolver.entity.Role;
 import uz.pdp.appproblemsolver.service.interfaces.RoleService;
@@ -16,22 +16,27 @@ public class RoleControllerImpl implements RoleController {
 
     private final RoleService roleService;
     @Override
-    public ResponseEntity<List<Role>> getAllRole() {
-        return null;
+    public ApiResult<List<Role>> getAllRole() {
+        return roleService.getAllRoles();
     }
 
     @Override
-    public ResponseEntity<Role> getRoleById(Integer id) {
-        return null;
+    public ApiResult<Role> getRoleById(Integer id) {
+        return roleService.getRoleById(id);
     }
 
     @Override
-    public ResponseEntity<?> createNewRole(RoleDTO roleDTO) {
-        return null;
+    public ApiResult<?> createNewRole(RoleDTO roleDTO) {
+        return roleService.createNewRole(roleDTO);
     }
 
     @Override
-    public ResponseEntity<?> deleteRoleById(Integer id) {
-        return null;
+    public ApiResult<?> updateRole(Integer id, RoleDTO roleDTO) {
+        return roleService.updateRole(id, roleDTO);
+    }
+
+    @Override
+    public ApiResult<?> deleteRoleById(Integer id) {
+        return roleService.deleteRoleById(id);
     }
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import uz.pdp.appproblemsolver.entity.enums.ProblemLevel;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -26,5 +27,7 @@ public class Problem {
     private ProblemLevel problemLevel;
     @ManyToOne
     private Category category;
+    @OneToMany(mappedBy = "problem", fetch = FetchType.EAGER)
+    private List<Example> example;
     boolean isDeleted;
 }
