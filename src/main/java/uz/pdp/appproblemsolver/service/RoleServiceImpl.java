@@ -11,10 +11,7 @@ import uz.pdp.appproblemsolver.payload.RoleDTO;
 import uz.pdp.appproblemsolver.repository.RoleRepository;
 import uz.pdp.appproblemsolver.service.interfaces.RoleService;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -61,6 +58,14 @@ public class RoleServiceImpl implements RoleService {
         roleRepository.save(role);
         return ApiResult
                 .successResponse("Role successfully updated");
+    }
+
+    @Override
+    public ApiResult<Map<String, Integer>> getAllPermissions() {
+        return ApiResult
+                .successResponse(
+                        Arrays.stream(Permission.values())
+                                .collect(Collectors.toMap(Enum::name, Enum::ordinal)));
     }
 
     private Role roleMapper(RoleDTO roleDTO) {

@@ -10,6 +10,7 @@ public class AppProblemSolverApplication {
         SpringApplication.run(AppProblemSolverApplication.class, args);
         //todo idea : make a feature like stackoverflow
         //todo idea : add a connecting with admin sent users message to telegram also web platform and add status message read or unread
+        //todo write special dto
     }
 
 }

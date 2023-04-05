@@ -32,3 +32,14 @@ spring:
           auth: true
           starttls:
             enable: true
+aws:
+  access:
+    key:
+      id: AKIASTA6V5ZP36G6E74C
+      secret: 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
+  s3:
+    region:
+      name: eu-central-1
+    bucket:
+      name: problem-solver
+    endpointUrl: .s3.eu-central-1.amazonaws.com/problem-solver/projects/problem-solver/images/avatar/

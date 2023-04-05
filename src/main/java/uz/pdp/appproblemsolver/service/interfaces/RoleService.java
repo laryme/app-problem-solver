@@ -5,6 +5,7 @@ import uz.pdp.appproblemsolver.payload.ApiResult;
 import uz.pdp.appproblemsolver.payload.RoleDTO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface RoleService {
     ApiResult<List<Role>> getAllRoles();
@@ -16,4 +17,6 @@ public interface RoleService {
     ApiResult<?> deleteRoleById(Integer id);
 
     ApiResult<?> updateRole(Integer id, RoleDTO roleDTO);
+
+    ApiResult<Map<String, Integer>> getAllPermissions();
 }

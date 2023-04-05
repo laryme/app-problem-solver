@@ -8,6 +8,7 @@ import uz.pdp.appproblemsolver.entity.Role;
 import uz.pdp.appproblemsolver.utils.Constants;
 
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping(RoleController.BASE_PATH)
 public interface RoleController {
@@ -32,5 +33,8 @@ public interface RoleController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_DELETE')")
     ApiResult<?> deleteRoleById(@PathVariable Integer id);
+
+    @GetMapping("/permission/all")
+    ApiResult<Map<String, Integer>> getAllPermissions();
 
 }

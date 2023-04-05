@@ -9,6 +9,7 @@ import uz.pdp.appproblemsolver.entity.Role;
 import uz.pdp.appproblemsolver.service.interfaces.RoleService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,5 +39,10 @@ public class RoleControllerImpl implements RoleController {
     @Override
     public ApiResult<?> deleteRoleById(Integer id) {
         return roleService.deleteRoleById(id);
+    }
+
+    @Override
+    public ApiResult<Map<String, Integer>> getAllPermissions() {
+        return roleService.getAllPermissions();
     }
 }

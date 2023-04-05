@@ -3,6 +3,7 @@ package uz.pdp.appproblemsolver.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -31,8 +32,8 @@ public class User implements UserDetails {
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp timestamp;
-    @Column(columnDefinition = "VARCHAR(255) DEFAULT '/images/avatar/default.png'", nullable = false)
-    private String avatarUrl = "/images/avatar/default.png";
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'https://problem-solver.s3.eu-central-1.amazonaws.com/problem-solver/projects/problem-solver/images/avatar/default.jpeg'", nullable = false)
+    private String avatarUrl;
     @ManyToOne(optional = false)
     private Role role;
     @Column(columnDefinition = "boolean DEFAULT false")
@@ -46,6 +47,7 @@ public class User implements UserDetails {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.avatarUrl = "https://problem-solver.s3.eu-central-1.amazonaws.com/problem-solver/projects/problem-solver/images/avatar/default.jpeg";
         this.role = role;
     }
 
