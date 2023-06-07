@@ -14,8 +14,6 @@ import uz.pdp.appproblemsolver.repository.CategoryRepository;
 import uz.pdp.appproblemsolver.repository.ProblemRepository;
 import uz.pdp.appproblemsolver.service.interfaces.ProblemService;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;

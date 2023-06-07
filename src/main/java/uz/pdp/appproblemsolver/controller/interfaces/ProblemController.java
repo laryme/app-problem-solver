@@ -18,7 +18,7 @@ public interface ProblemController {
 
     @GetMapping("/all")
     ApiResult<?> getAllProblems(
-            @RequestParam(required = false,defaultValue = "0") Integer page,
+                @RequestParam(required = false,defaultValue = "0") Integer page,
             @RequestParam(required = false, defaultValue = "10") int size,
             @RequestParam(required = false, defaultValue = "id,asc") String[] sort);
 

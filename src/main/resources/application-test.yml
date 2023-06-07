@@ -1,0 +1,45 @@
+app:
+  jwt:
+    token:
+      key:
+        access: key
+        refresh: key
+        verify: key
+      expiration:
+        access: 86400000
+        refresh: 604800000
+        verify: 1800000
+spring:
+  datasource:
+    url: url
+    username: username
+    password: pwd
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: email
+    password: password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+aws:
+  access:
+    key:
+      id: id
+      secret: secret_key
+  s3:
+    region:
+      name: region
+    bucket:
+      name: problem-solver
+    endpointUrl: endpointUrl
